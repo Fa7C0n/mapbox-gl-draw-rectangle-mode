@@ -47,7 +47,12 @@ const DrawRectangle = {
     };
   },
   // Whenever a user clicks on the map, Draw will call `onClick`
-  onClick: function(state, e) {
+  onMouseDown: function(state, e) {
+    // on first click, save clicked point coords as starting for  rectangle
+    const startPoint = [e.lngLat.lng, e.lngLat.lat];
+    state.startPoint = startPoint;
+  },
+  onMouseUp: function(state,e) {
     // if state.startPoint exist, means its second click
     //change to  simple_select mode
     if (
@@ -59,9 +64,6 @@ const DrawRectangle = {
       state.endPoint = [e.lngLat.lng, e.lngLat.lat];
       this.changeMode("simple_select", { featuresId: state.rectangle.id });
     }
-    // on first click, save clicked point coords as starting for  rectangle
-    const startPoint = [e.lngLat.lng, e.lngLat.lat];
-    state.startPoint = startPoint;
   },
   onMouseMove: function(state, e) {
     // if startPoint, update the feature coordinates, using the bounding box concept
